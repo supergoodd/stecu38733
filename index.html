@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview APK Bug</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Courier New', monospace; }
+        body { background-color: #000; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        
+        .phone-frame {
+            width: 380px;
+            height: 750px;
+            background: #080810;
+            border: 8px solid #1a1a2e;
+            border-radius: 40px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+        }
+
+        /* Header */
+        .header { padding: 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(59, 130, 246, 0.2); }
+        .header h1 { font-size: 16px; color: #3b82f6; letter-spacing: 2px; text-shadow: 0 0 10px #3b82f6; }
+        .menu-icon { color: #3b82f6; font-size: 24px; }
+
+        /* User Card */
+        .user-card {
+            margin: 20px; padding: 15px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(6, 182, 212, 0.15));
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 15px;
+            display: flex; align-items: center; gap: 15px;
+        }
+        .avatar { width: 50px; height: 50px; background: #1e293b; border-radius: 50%; border: 2px solid #3b82f6; display: flex; justify-content: center; align-items: center; }
+        .user-info h2 { font-size: 14px; }
+        .user-info p { font-size: 10px; color: #9ca3af; margin-top: 4px; }
+        .status-badge { margin-left: auto; background: rgba(16, 185, 129, 0.2); color: #10b981; padding: 4px 8px; border-radius: 5px; font-size: 10px; border: 1px solid #10b981; }
+
+        /* Banner */
+        .banner {
+            margin: 0 20px; height: 120px;
+            background: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000') center/cover;
+            border-radius: 15px; position: relative; overflow: hidden;
+        }
+        .banner::after { content: 'ONE TAP, ONE DEAD'; position: absolute; bottom: 10px; left: 10px; font-size: 12px; font-weight: bold; text-shadow: 1px 1px 5px #000; }
+
+        /* Form */
+        .form-section { padding: 20px; }
+        .input-label { font-size: 12px; color: #3b82f6; margin-bottom: 5px; display: block; }
+        .input-box {
+            width: 100%; padding: 15px; margin-bottom: 15px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 10px; color: #fff; font-family: inherit;
+        }
+
+        /* Mode Grid */
+        .mode-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
+        .mode-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            padding: 12px; border-radius: 10px; text-align: center;
+        }
+        .mode-card.active { border-color: #3b82f6; background: rgba(29, 78, 216, 0.2); box-shadow: 0 0 15px rgba(59, 130, 246, 0.3); }
+        .mode-card h3 { font-size: 12px; margin-top: 5px; }
+        .mode-card p { font-size: 9px; color: #6b7280; }
+
+        /* Send Button */
+        .send-btn {
+            width: 100%; padding: 18px;
+            background: linear-gradient(135deg, #000 0%, #1e293b 50%, #1d4ed8 100%);
+            border: none; border-radius: 15px;
+            color: white; font-size: 16px; font-weight: bold; letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+            cursor: pointer;
+        }
+
+        /* Bottom Nav */
+        .bottom-nav {
+            position: absolute; bottom: 0; width: 100%; height: 70px;
+            background: rgba(0,0,0,0.9); border-top: 1px solid rgba(59, 130, 246, 0.2);
+            display: flex; justify-content: space-around; align-items: center;
+        }
+        .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 10px; color: #6b7280; }
+        .nav-item.active { color: #3b82f6; }
+        .nav-icon { font-size: 20px; margin-bottom: 5px; }
+        
+    </style>
+</head>
+<body>
+
+    <div class="phone-frame">
+        <!-- Header -->
+        <div class="header">
+            <div class="menu-icon">☰</div>
+            <h1>APOCALYPSE VOID</h1>
+            <div style="width: 24px;"></div>
+        </div>
+
+        <!-- User Card -->
+        <div class="user-card">
+            <div class="avatar">👤</div>
+            <div class="user-info">
+                <h2>Supergoodd</h2>
+                <p>ROLE: OWNER</p>
+            </div>
+            <div class="status-badge">ACTIVE</div>
+        </div>
+
+        <!-- Banner -->
+        <div class="banner"></div>
+
+        <!-- Form -->
+        <div class="form-section">
+            <label class="input-label">NUMBER TARGETS</label>
+            <input type="text" class="input-box" placeholder="e.g. 628xxxxxxxxxx">
+
+            <label class="input-label">SELECT ATTACK TYPE</label>
+            <div class="mode-grid">
+                <div class="mode-card active">
+                    <div style="font-size: 20px;">💀</div>
+                    <h3>FORCLOSE TRASH</h3>
+                    <p>Spam Attack</p>
+                </div>
+                <div class="mode-card">
+                    <div style="font-size: 20px;">🚀</div>
+                    <h3>BULDOZER</h3>
+                    <p>Sedot Kuota</p>
+                </div>
+                <div class="mode-card">
+                    <div style="font-size: 20px;">⏱️</div>
+                    <h3>SUPER DELAY</h3>
+                    <p>Maximum Delay</p>
+                </div>
+                <div class="mode-card">
+                    <div style="font-size: 20px;">🍎</div>
+                    <h3>KILL IOS</h3>
+                    <p>iOS Crash</p>
+                </div>
+            </div>
+
+            <button class="send-btn">SEND BUG 🚀</button>
+        </div>
+
+        <!-- Bottom Nav -->
+        <div class="bottom-nav">
+            <div class="nav-item active">
+                <div class="nav-icon">🏠</div>
+                <span>Home</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">💬</div>
+                <span>WhatsApp</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">📺</div>
+                <span>Anime</span>
+            </div>
+        </div>
+    </div>
+
+</body>
+                      </html>
